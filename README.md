@@ -9,4 +9,4 @@ Spring Boot Restful API with Spring Security
 [![Security](https://sonarcloud.io/api/project_badges/measure?project=br.com.jonyfs%3Aspring-security-api&metric=security_rating)](https://sonarcloud.io/dashboard?id=br.com.jonyfs%3Aspring-security-api)
 [![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=br.com.jonyfs%3Aspring-security-api&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=br.com.jonyfs%3Aspring-security-api)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=br.com.jonyfs%3Aspring-security-api&metric=coverage)](https://sonarcloud.io/dashboard?id=br.com.jonyfs%3Aspring-security-api)
-
+[![Dependency Status](https://beta.gemnasium.com/badges/github.com/jonyfs/spring-security-api.svg)](https://beta.gemnasium.com/projects/github.com/jonyfs/spring-security-api)
