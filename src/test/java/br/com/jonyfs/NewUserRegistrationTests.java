@@ -60,10 +60,10 @@ public class NewUserRegistrationTests {
 
         UserDto user = UserDto
                 .builder()
-                .firstName("newuser")
-                .lastName("newuser")
+                .firstName("newuser2")
+                .lastName("newuser2")
                 .password("password")
-                .email("newuser@test.com")
+                .email("newuser2@test.com")
                 .build();
 
         given()

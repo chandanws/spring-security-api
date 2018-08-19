@@ -41,8 +41,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     @ExceptionHandler(EmailExistsException.class)
-    protected ResponseEntity<Object> handleEmailExistsException(EmailExistsException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
+    protected ResponseEntity<ErrorDetails> handleEmailExistsException(EmailExistsException ex, WebRequest request) {
         ErrorDetails errorDetails = ErrorDetails
                 .builder()
                 .timestamp(new Date())
