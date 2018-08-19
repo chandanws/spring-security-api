@@ -3,6 +3,8 @@ package br.com.jonyfs.config;
 import br.com.jonyfs.security.MySavedRequestAwareAuthenticationSuccessHandler;
 import br.com.jonyfs.security.RestAuthenticationEntryPoint;
 import br.com.jonyfs.user.AppUserDetailsService;
+import javax.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +21,14 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 @Configuration
 @EnableWebSecurity
 @ComponentScan("br.com.jonyfs")
+@Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @PostConstruct
+    public void logMessage() {
+        LOGGER.info("STARTED");
+    }
+
 
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -39,6 +49,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web
+                .ignoring()
+                .antMatchers("/resources/**");
+    }
+
+
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf()
@@ -47,8 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/newUser")
-                .anonymous()
+                .antMatchers("/newUser", "/swagger-ui.html", "/swagger-resources", "/v2/api-docs", "/webjars/**")
+                .permitAll()
                 .antMatchers("/api")
                 .authenticated()
                 .and()

@@ -15,7 +15,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         LOGGER.info("STARTED");
     }
 
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")
@@ -23,6 +22,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+
+        registry
+                .addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
+
     }
 
 }
