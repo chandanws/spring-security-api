@@ -3,6 +3,7 @@ package br.com.jonyfs;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.filter.session.SessionFilter;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,7 @@ public class PrivilegesTests extends BasicTests {
     @LocalServerPort
     int port;
 
+    @Ignore
     @Test
     public void givenUserAndPassword_whenUserInfoIsOkAndAccessResourcePage_thenStatusOK() {
 
