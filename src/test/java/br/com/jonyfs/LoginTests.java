@@ -26,31 +26,29 @@ public class LoginTests extends BasicTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .formParam("username", "admin@test.com")
-                .formParam("password", "password")
-                .when()
-                .post("/login")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.OK.value());
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .formParam("username", "admin@test.com")
+            .formParam("password", "password")
+            .when()
+            .post("/login")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.OK.value());
 
-        /* TODO REDIRECT TO /me url
         given()
-                .port(port)
-                .log()
-                .all()
-                .when()
-                .get("/me")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.OK.value
-         */
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .get("/me")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.OK.value());
 
     }
 
@@ -63,18 +61,18 @@ public class LoginTests extends BasicTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .formParam("username", "unknow@test.com")
-                .formParam("password", "password")
-                .when()
-                .post("/login")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.UNAUTHORIZED.value());
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .formParam("username", "unknow@test.com")
+            .formParam("password", "password")
+            .when()
+            .post("/login")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.UNAUTHORIZED.value());
 
     }
 }
