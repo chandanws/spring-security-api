@@ -1,6 +1,7 @@
 package br.com.jonyfs.user;
 
 import br.com.jonyfs.role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -25,6 +26,7 @@ public class User extends AbstractAuditable<User, Long> {
     @Email
     String email;
 
+    @JsonIgnore
     @NotEmpty
     String password;
 

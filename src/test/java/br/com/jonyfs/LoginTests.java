@@ -39,6 +39,17 @@ public class LoginTests extends BasicTests {
                 .all()
                 .statusCode(HttpStatus.OK.value());
 
+        given()
+                .port(port)
+                .log()
+                .all()
+                .when()
+                .get("/me")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.OK.value());
+
     }
 
     @Test
