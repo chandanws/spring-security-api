@@ -3,6 +3,7 @@ package br.com.jonyfs;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.filter.session.SessionFilter;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,13 +13,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class LoginTests extends BasicTests {
+public class UserTests extends BasicTests {
 
     @LocalServerPort
     int port;
 
+    @Ignore
     @Test
-    public void givenUserAndPassword_whenUserInfoIsOkAndAccessHisPage_thenStatusOK() {
+    public void givenUserAndPassword_whenUserInfoIsOkAndAccessResourcePage_thenStatusOK() {
 
         RestAssured.useRelaxedHTTPSValidation();
         SessionFilter sessionFilter = new SessionFilter();
@@ -44,7 +46,7 @@ public class LoginTests extends BasicTests {
             .log()
             .all()
             .filter(sessionFilter)
-            .get("/me")
+            .get("/users")
             .then()
             .log()
             .all()
@@ -64,27 +66,4 @@ public class LoginTests extends BasicTests {
 
     }
 
-    @Test
-    public void givenUserAndPassword_whenUserIsUnknow_thenStatusUnauthorized() {
-
-        RestAssured.useRelaxedHTTPSValidation();
-        SessionFilter sessionFilter = new SessionFilter();
-
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-
-        given()
-            .port(port)
-            .log()
-            .all()
-            .filter(sessionFilter)
-            .formParam("username", "unknow@test.com")
-            .formParam("password", "password")
-            .when()
-            .post("/login")
-            .then()
-            .log()
-            .all()
-            .statusCode(HttpStatus.UNAUTHORIZED.value());
-
-    }
 }

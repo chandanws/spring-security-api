@@ -29,7 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         LOGGER.info("STARTED");
     }
 
-
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
@@ -51,30 +50,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
-                .ignoring()
-                .antMatchers("/resources/**");
+            .ignoring()
+            .antMatchers("/resources/**");
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
-                .disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(restAuthenticationEntryPoint)
-                .and()
-                .authorizeRequests()
-                .antMatchers("/newUser", "/swagger-ui.html", "/swagger-resources", "/v2/api-docs", "/webjars/**")
-                .permitAll()
-                .antMatchers("/api", "/me")
-                .authenticated()
-                .and()
-                .formLogin()
-                .successHandler(authenticationSuccessHandler)
-                .failureHandler(new SimpleUrlAuthenticationFailureHandler())
-                .and()
-                .logout();
+            .csrf()
+            .disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(restAuthenticationEntryPoint)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/newUser", "/swagger-ui.html", "/swagger-resources", "/v2/api-docs", "/webjars/**")
+            .permitAll()
+            .antMatchers("/roles", "/privileges", "/users", "/me")
+            .authenticated()
+            .and()
+            .formLogin()
+            .successHandler(authenticationSuccessHandler)
+            .failureHandler(new SimpleUrlAuthenticationFailureHandler())
+            .and()
+            .logout();
     }
 
     @Bean
