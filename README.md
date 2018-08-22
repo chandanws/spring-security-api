@@ -30,13 +30,13 @@ mvn spring-boot:run
 
 ## Online Cloud Example(with Continuous Deployment)
 
-    [https://spring-security-api.herokuapp.com](https://spring-security-api.herokuapp.com)
+*   [https://spring-security-api.herokuapp.com](https://spring-security-api.herokuapp.com)
 
 ### Swagger Documentarion
 
-    [https://spring-security-api.herokuapp.com/swagger-ui.html](https://spring-security-api.herokuapp.com/swagger-ui.html)
+*   [https://spring-security-api.herokuapp.com/swagger-ui.html](https://spring-security-api.herokuapp.com/swagger-ui.html)
 
 ### Hal Browser
 
-    [https://spring-security-api.herokuapp.com/browser/index.html](https://spring-security-api.herokuapp.com/browser/index.html)
+*   [https://spring-security-api.herokuapp.com/browser/index.html](https://spring-security-api.herokuapp.com/browser/index.html)
     
