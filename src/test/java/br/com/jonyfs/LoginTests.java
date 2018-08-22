@@ -39,6 +39,7 @@ public class LoginTests extends BasicTests {
                 .all()
                 .statusCode(HttpStatus.OK.value());
 
+        /* TODO REDIRECT TO /me url
         given()
                 .port(port)
                 .log()
@@ -48,7 +49,8 @@ public class LoginTests extends BasicTests {
                 .then()
                 .log()
                 .all()
-                .statusCode(HttpStatus.OK.value());
+                .statusCode(HttpStatus.OK.value
+         */
 
     }
 
