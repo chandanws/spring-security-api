@@ -28,6 +28,6 @@ Spring Boot Restful API with Spring Security
 mvn spring-boot:run
 
 
-## Online Cloud Example
+## Online Cloud Example(with Continuous Deployment)
 
     https://spring-security-api.herokuapp.com
