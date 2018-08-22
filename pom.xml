@@ -23,11 +23,11 @@
         <mockito.version>1.10.19</mockito.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <springfox.version>2.9.2</springfox.version>
+        <sonar.cobertura.reportPath>${project.basedir}/target/cobertura/cobertura.ser</sonar.cobertura.reportPath>
         <sonar.java.coveragePlugin>cobertura</sonar.java.coveragePlugin>
         <sonar.junit.reportsPath>${project.basedir}/target/surefire-reports</sonar.junit.reportsPath>
         <sonar.surefire.reportsPath>${project.basedir}/target/surefire-reports</sonar.surefire.reportsPath>
-        <sonar.cobertura.reportPath>${project.basedir}/target/cobertura/cobertura.ser</sonar.cobertura.reportPath>
+        <springfox.version>2.9.2</springfox.version>
 
     </properties>
 
@@ -138,18 +138,18 @@
                 <executions>
                     <execution>
                         <id>clean</id>
-                        <phase>pre-site</phase>
                         <goals>
                             <goal>clean</goal>
                         </goals>
+                        <phase>pre-site</phase>
                     </execution>
                     <execution>
                         <id>instrument</id>
-                        <phase>site</phase>
                         <goals>
                             <goal>instrument</goal>
                             <goal>cobertura</goal>
                         </goals>
+                        <phase>site</phase>
                     </execution>
                 </executions>
             </plugin>
