@@ -2,6 +2,7 @@ package br.com.jonyfs.privilege;
 
 import br.com.jonyfs.role.Role;
 import br.com.jonyfs.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -18,8 +19,9 @@ import org.springframework.data.jpa.domain.AbstractAuditable;
 @AllArgsConstructor
 public class Privilege extends AbstractAuditable<User, Long> {
 
-	private String name;
+    private String name;
 
-	@ManyToMany(mappedBy = "privileges")
-	private Collection<Role> roles;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "privileges")
+    private Collection<Role> roles;
 }
