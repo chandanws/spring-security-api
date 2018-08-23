@@ -2,6 +2,7 @@ package br.com.jonyfs.user;
 
 import br.com.jonyfs.role.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -23,6 +24,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends AbstractAuditable<User, Long> {
 
     @NotEmpty
