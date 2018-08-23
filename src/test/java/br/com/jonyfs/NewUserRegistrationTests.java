@@ -93,4 +93,33 @@ public class NewUserRegistrationTests {
                 .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
+    @Test
+    public void givenNewUserRequest_whenUserDtoInvalidEmail_thenStatusBadRequest() throws JsonProcessingException {
+
+        RestAssured.useRelaxedHTTPSValidation();
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+
+        UserDto user = UserDto
+                .builder()
+                .firstName("newuser2")
+                .lastName("newuser2")
+                .password("password")
+                .email("wrongemail.test.com")
+                .build();
+
+        given()
+                .port(port)
+                .log()
+                .all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(objectMapper.writeValueAsBytes(user))
+                .when()
+                .post("/newUser")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.BAD_REQUEST.value());
+
+    }
+
 }
