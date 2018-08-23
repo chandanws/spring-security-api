@@ -1,9 +1,13 @@
 package br.com.jonyfs.user;
 
 import br.com.jonyfs.role.Role;
+import br.com.jonyfs.team.Team;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
@@ -25,7 +29,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User extends AbstractAuditable<User, Long> {
+public class User extends AbstractAuditable<User, Long> implements Serializable {
 
     @NotEmpty
     @Email
@@ -48,4 +52,7 @@ public class User extends AbstractAuditable<User, Long> {
     @ManyToMany
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
+
+    @ManyToMany(mappedBy = "users")
+    private Set<Team> posts = new HashSet<>();
 }
