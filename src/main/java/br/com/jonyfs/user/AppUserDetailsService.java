@@ -2,12 +2,10 @@ package br.com.jonyfs.user;
 
 import br.com.jonyfs.privilege.Privilege;
 import br.com.jonyfs.role.Role;
-import br.com.jonyfs.role.RoleRepository;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,17 +21,8 @@ public class AppUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService service;
-
-    @Autowired
-    private MessageSource messages;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) {
 
         User user = userRepository.findByEmail(email);
         if (user == null) {

@@ -36,15 +36,11 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(Arrays.asList(roles));
 
-
         return userRepository.save(user);
     }
 
     private boolean emailExist(String email) {
         User user = userRepository.findByEmail(email);
-        if (user != null) {
-            return true;
-        }
-        return false;
+        return user != null;
     }
 }
