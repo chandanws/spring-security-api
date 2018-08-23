@@ -1,9 +1,9 @@
 package br.com.jonyfs;
 
+import br.com.jonyfs.user.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.filter.session.SessionFilter;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +18,6 @@ public class RoleTests extends BasicTests {
     @LocalServerPort
     int port;
 
-    @Ignore
     @Test
     public void givenUserAndPassword_whenUserInfoIsOkAndAccessResourcePage_thenStatusOK() {
 
@@ -27,16 +26,18 @@ public class RoleTests extends BasicTests {
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
+        User user = createUserIfNotFound("admin3@test.com", createRoleAdminIfNotFound());
+
         given()
-            .port(port)
-            .log()
-            .all()
-            .filter(sessionFilter)
-            .formParam("username", "admin@test.com")
-            .formParam("password", "password")
-            .when()
-            .post("/login")
-            .then()
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .formParam("username", user.getEmail())
+                .formParam("password", user.getPassword())
+                .when()
+                .post("/login")
+                .then()
             .log()
             .all()
             .statusCode(HttpStatus.OK.value());

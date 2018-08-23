@@ -1,5 +1,6 @@
 package br.com.jonyfs;
 
+import br.com.jonyfs.user.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.filter.session.SessionFilter;
@@ -25,42 +26,44 @@ public class LoginTests extends BasicTests {
 
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
-        given()
-            .port(port)
-            .log()
-            .all()
-            .filter(sessionFilter)
-            .formParam("username", "admin@test.com")
-            .formParam("password", "password")
-            .when()
-            .post("/login")
-            .then()
-            .log()
-            .all()
-            .statusCode(HttpStatus.OK.value());
+        User user = createUserIfNotFound("admin@test.com", createRoleAdminIfNotFound());
 
         given()
-            .port(port)
-            .log()
-            .all()
-            .filter(sessionFilter)
-            .get("/me")
-            .then()
-            .log()
-            .all()
-            .statusCode(HttpStatus.OK.value());
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .formParam("username", user.getEmail())
+                .formParam("password", user.getPassword())
+                .when()
+                .post("/login")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.OK.value());
 
         given()
-            .port(port)
-            .log()
-            .all()
-            .filter(sessionFilter)
-            .when()
-            .post("/logout")
-            .then()
-            .log()
-            .all()
-            .statusCode(HttpStatus.MOVED_TEMPORARILY.value());
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .get("/me")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.OK.value());
+
+        given()
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .when()
+                .post("/logout")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.MOVED_TEMPORARILY.value());
 
     }
 
@@ -73,18 +76,18 @@ public class LoginTests extends BasicTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         given()
-            .port(port)
-            .log()
-            .all()
-            .filter(sessionFilter)
-            .formParam("username", "unknow@test.com")
-            .formParam("password", "password")
-            .when()
-            .post("/login")
-            .then()
-            .log()
-            .all()
-            .statusCode(HttpStatus.UNAUTHORIZED.value());
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .formParam("username", "unknow@test.com")
+                .formParam("password", "password")
+                .when()
+                .post("/login")
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.UNAUTHORIZED.value());
 
     }
 }

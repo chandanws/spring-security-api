@@ -4,6 +4,7 @@ import br.com.jonyfs.privilege.Privilege;
 import br.com.jonyfs.privilege.PrivilegeRepository;
 import br.com.jonyfs.role.Role;
 import br.com.jonyfs.role.RoleRepository;
+import br.com.jonyfs.user.User;
 import br.com.jonyfs.user.UserDto;
 import br.com.jonyfs.user.UserRepository;
 import br.com.jonyfs.user.UserService;
@@ -12,14 +13,10 @@ import java.util.Collection;
 import java.util.List;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Slf4j
 public class BasicTests {
-
-    public static boolean alreadySetup = false;
 
     @Autowired
     private UserRepository userRepository;
@@ -31,47 +28,45 @@ public class BasicTests {
     private PrivilegeRepository privilegeRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
     private UserService userService;
 
-    @Before
-    public void createUsersRolesAndPrivileges() {
-        if (alreadySetup) {
-            return;
-        }
-        Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
-        Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
+    @Transactional
+    protected Role createRoleAdminIfNotFound() {
+
+        Privilege readPrivilege = createPrivilegeIfNotFound(Privileges.READ_PRIVILEGE.name());
+        Privilege writePrivilege = createPrivilegeIfNotFound(Privileges.WRITE_PRIVILEGE.name());
 
         List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
-        Role adminRole = createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        Role userRole = createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
+        Role adminRole = createRoleIfNotFound(Roles.ROLE_ADMIN.name(), adminPrivileges);
+        return adminRole;
+    }
 
-        UserDto user = UserDto
-                .builder()
-                .firstName("user")
-                .lastName("user")
-                .password("password")
-                .email("user@test.com")
-                .build();
-        UserDto admin = UserDto
-                .builder()
-                .firstName("admin")
-                .lastName("admin")
-                .password("password")
-                .email("admin@test.com")
-                .build();
+    @Transactional
+    protected Role createRoleUserIfNotFound() {
 
-        LOGGER.info("Registering a new user: {}...", user);
-        userService.registerNewUserAccount(user, userRole);
-        LOGGER.info("OK.");
+        Privilege readPrivilege = createPrivilegeIfNotFound(Privileges.READ_PRIVILEGE.name());
 
-        LOGGER.info("Registering a new user: {}...", admin);
-        userService.registerNewUserAccount(admin, adminRole);
-        LOGGER.info("OK.");
+        Role userRole = createRoleIfNotFound(Roles.ROLE_USER.name(), Arrays.asList(readPrivilege));
+        return userRole;
+    }
 
-        alreadySetup = true;
+    @Transactional
+    protected User createUserIfNotFound(String email, Role... roles) {
+        User user = userRepository.findByEmail(email);
+        if (user == null) {
+            UserDto userDto = UserDto
+                    .builder()
+                    .firstName(email.substring(0, email.indexOf("@")))
+                    .lastName("Rogers")
+                    .password("password")
+                    .email(email)
+                    .build();
+
+            LOGGER.info("Registering a new user: {}...", userDto);
+            user = userService.registerNewUserAccount(userDto, roles);
+            LOGGER.info("OK.");
+        }
+        return user;
 
     }
 
