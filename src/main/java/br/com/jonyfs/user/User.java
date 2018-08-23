@@ -31,6 +31,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends AbstractAuditable<User, Long> implements Serializable {
 
+    private static final long serialVersionUID = 4474779185669784988L;
+
     @NotEmpty
     @Email
     String email;
