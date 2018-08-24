@@ -1,5 +1,8 @@
-package br.com.jonyfs.user;
+package br.com.jonyfs.dashboard;
 
+import br.com.jonyfs.team.TeamRepository;
+import br.com.jonyfs.user.User;
+import br.com.jonyfs.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -10,20 +13,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/me")
-public class MeController {
+@RequestMapping("/dashboard")
+public class DashboardController {
 
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TeamRepository teamRepository;
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> me() {
+    public ResponseEntity<DashboardDTO> me() {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
-        User savedUser = userRepository.findByEmail(username);
 
-        return ResponseEntity.ok(savedUser);
+        User loggedUser = userRepository.findByEmail(username);
+
+        return ResponseEntity.ok(DashboardDTO
+            .builder()
+            .me(loggedUser)
+            .teamsIHaveCreated(teamRepository.findByCreatedBy(loggedUser))
+            //.teamsIWasAssociated(teamRepository.findByChildrenUsersContaining(loggedUser))
+            .build()
+        );
 
     }
 

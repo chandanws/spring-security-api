@@ -47,7 +47,7 @@ public class LoginTests extends BasicTests {
                 .log()
                 .all()
                 .filter(sessionFilter)
-                .get("/me")
+                .get("/dashboard")
                 .then()
                 .log()
                 .all()
