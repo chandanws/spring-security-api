@@ -10,6 +10,6 @@ public interface TeamRepository extends PagingAndSortingRepository<Team, Long> {
 
     List<Team> findByCreatedBy(User user);
 
-    //List<Team> findByChildrenIsNotNullAndChildrenUsersContaining(User user);
+    List<Team> findByUsersContaining(User user);
 
 }

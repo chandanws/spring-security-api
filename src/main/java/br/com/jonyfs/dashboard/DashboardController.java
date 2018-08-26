@@ -30,13 +30,15 @@ public class DashboardController {
 
         User loggedUser = userRepository.findByEmail(username);
 
-        return ResponseEntity.ok(DashboardDTO
-            .builder()
-            .me(loggedUser)
-            .teamsIHaveCreated(teamRepository.findByCreatedBy(loggedUser))
-            //.teamsIWasAssociated(teamRepository.findByChildrenUsersContaining(loggedUser))
-            .build()
-        );
+        return ResponseEntity
+            .ok(
+                DashboardDTO
+                    .builder()
+                    .me(loggedUser)
+                    .teamsIHaveCreated(teamRepository.findByCreatedBy(loggedUser))
+                    .teamsIWasAssociated(teamRepository.findByUsersContaining(loggedUser))
+                    .build()
+            );
 
     }
 

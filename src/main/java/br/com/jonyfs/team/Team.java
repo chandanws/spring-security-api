@@ -4,11 +4,8 @@ import br.com.jonyfs.user.User;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,14 +34,8 @@ public class Team extends AbstractAuditable<User, Long> implements Serializable 
     @OneToMany(mappedBy = "parent")
     private Set<Team> children = new HashSet<>();
 
-    @ManyToMany(cascade = {
-        CascadeType.PERSIST,
-        CascadeType.MERGE
-    })
-    @JoinTable(name = "teams_users",
-        joinColumns = @JoinColumn(name = "team_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
+    @ManyToMany(mappedBy = "teams")
     private Set<User> users = new HashSet<>();
+
 
 }

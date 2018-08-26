@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
@@ -55,6 +56,13 @@ public class User extends AbstractAuditable<User, Long> implements Serializable 
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Team> posts = new HashSet<>();
+    @ManyToMany(cascade = {
+        CascadeType.PERSIST,
+        CascadeType.MERGE
+    })
+    @JoinTable(name = "teams_users",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<Team> teams = new HashSet<>();
 }
