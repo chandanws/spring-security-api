@@ -33,48 +33,48 @@ public class UserTests extends BasicTests {
         User user = createUserIfNotFound("admin3@test.com", createRoleAdminIfNotFound());
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .formParam("username", user.getEmail())
-                .formParam("password", user.getPassword())
-                .when()
-                .post("/login")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.OK.value());
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .formParam("username", user.getEmail())
+            .formParam("password", user.getPassword())
+            .when()
+            .post("/login")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.OK.value());
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .get("/users")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.OK.value());
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .get("/users")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.OK.value());
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .get("/users/{id}", user.getId())
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.OK.value())
-                .body("email", equalTo(user.getEmail()));
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .get("/users/{id}", user.getId())
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.OK.value())
+            .body("email", equalTo(user.getEmail()));
 
         User userFromRest = given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .get("/users/{id}", user.getId()).as(User.class);
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .get("/users/{id}", user.getId()).as(User.class);
 
         LOGGER.info("User parsed from Rest:{}", userFromRest);
 
@@ -83,16 +83,16 @@ public class UserTests extends BasicTests {
         assertThat(userFromRest.getEmail()).isNotNull();
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .filter(sessionFilter)
-                .when()
-                .post("/logout")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.MOVED_TEMPORARILY.value());
+            .port(port)
+            .log()
+            .all()
+            .filter(sessionFilter)
+            .when()
+            .post("/logout")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.MOVED_TEMPORARILY.value());
 
     }
 

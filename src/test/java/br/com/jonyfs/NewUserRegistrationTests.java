@@ -31,25 +31,25 @@ public class NewUserRegistrationTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         UserDto user = UserDto
-                .builder()
-                .firstName("newuser")
-                .lastName("newuser")
-                .password("password")
-                .email("newuser@test.com")
-                .build();
+            .builder()
+            .firstName("newuser")
+            .lastName("newuser")
+            .password("password")
+            .email("newuser@test.com")
+            .build();
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(objectMapper.writeValueAsBytes(user))
-                .when()
-                .post("/newUser")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.CREATED.value());
+            .port(port)
+            .log()
+            .all()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(objectMapper.writeValueAsString(user))
+            .when()
+            .post("/newUser")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.CREATED.value());
     }
 
     @Test
@@ -59,38 +59,38 @@ public class NewUserRegistrationTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         UserDto user = UserDto
-                .builder()
-                .firstName("newuser2")
-                .lastName("newuser2")
-                .password("password")
-                .email("newuser2@test.com")
-                .build();
+            .builder()
+            .firstName("newuser2")
+            .lastName("newuser2")
+            .password("password")
+            .email("newuser2@test.com")
+            .build();
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(objectMapper.writeValueAsBytes(user))
-                .when()
-                .post("/newUser")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.CREATED.value());
+            .port(port)
+            .log()
+            .all()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(objectMapper.writeValueAsString(user))
+            .when()
+            .post("/newUser")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.CREATED.value());
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(objectMapper.writeValueAsBytes(user))
-                .when()
-                .post("/newUser")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+            .port(port)
+            .log()
+            .all()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(objectMapper.writeValueAsString(user))
+            .when()
+            .post("/newUser")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.BAD_REQUEST.value());
     }
 
     @Test
@@ -100,25 +100,25 @@ public class NewUserRegistrationTests {
         RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
 
         UserDto user = UserDto
-                .builder()
-                .firstName("newuser2")
-                .lastName("newuser2")
-                .password("password")
-                .email("wrongemail.test.com")
-                .build();
+            .builder()
+            .firstName("newuser2")
+            .lastName("newuser2")
+            .password("password")
+            .email("wrongemail.test.com")
+            .build();
 
         given()
-                .port(port)
-                .log()
-                .all()
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(objectMapper.writeValueAsBytes(user))
-                .when()
-                .post("/newUser")
-                .then()
-                .log()
-                .all()
-                .statusCode(HttpStatus.BAD_REQUEST.value());
+            .port(port)
+            .log()
+            .all()
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(objectMapper.writeValueAsString(user))
+            .when()
+            .post("/newUser")
+            .then()
+            .log()
+            .all()
+            .statusCode(HttpStatus.BAD_REQUEST.value());
 
     }
 
