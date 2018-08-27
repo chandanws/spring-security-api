@@ -3,7 +3,6 @@ package br.com.jonyfs.user;
 import br.com.jonyfs.role.Role;
 import br.com.jonyfs.team.Team;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -29,7 +28,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends AbstractAuditable<User, Long> implements Serializable {
 
     private static final long serialVersionUID = 4474779185669784988L;

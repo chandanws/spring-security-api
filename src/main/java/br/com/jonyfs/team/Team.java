@@ -3,7 +3,7 @@ package br.com.jonyfs.team;
 import br.com.jonyfs.user.User;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +11,8 @@ import javax.persistence.EntityListeners;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,22 +44,20 @@ public class Team extends AbstractAuditable<User, Long> implements Serializable 
     @ManyToMany(mappedBy = "teams")
     private Set<User> users = new HashSet<>();
 
-    private void checkChildren() {
-        if (this.children == null) {
-            this.children = new HashSet<>();
-        }
-
-    }
-
-    public void add(Team child) {
+    @PrePersist
+    public void prePersist() {
         checkChildren();
-        child.setParent(this);
-        children.add(child);
     }
 
-    public void add(List<Team> teams) {
-        for (Team team : teams) {
-            add(team);
-        }
+    @PreUpdate
+    public void preUpdate() {
+        checkChildren();
     }
+
+    private void checkChildren() {
+        children
+            .stream()
+            .filter(child -> Objects.isNull(child.parent)).forEach(child -> child.setParent(this));
+    }
+
 }
