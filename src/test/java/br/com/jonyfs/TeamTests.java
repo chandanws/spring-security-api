@@ -31,9 +31,6 @@ public class TeamTests extends BasicTests {
 
     private User admin;
 
-    @Autowired
-    ObjectMapper objectMapper;
-
     @Before
     public void init() {
         admin = createUserIfNotFound("admin.team@test.com", createRoleAdminIfNotFound());

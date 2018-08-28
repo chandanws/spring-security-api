@@ -1,6 +1,7 @@
 package br.com.jonyfs.team;
 
 import br.com.jonyfs.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,6 +21,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.lang.Nullable;
 
 @Entity
 @Builder
@@ -27,14 +29,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Team extends AbstractAuditable<User, Long> implements Serializable {
 
     private static final long serialVersionUID = 7939574994859410419L;
 
-    @NotEmpty
+    //@NotEmpty
     @Column(unique = true)
     private String name;
 
+    @Nullable
     @ManyToOne
     private Team parent;
 
