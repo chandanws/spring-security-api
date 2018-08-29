@@ -10,6 +10,7 @@ import static io.restassured.RestAssured.given;
 import io.restassured.filter.session.SessionFilter;
 import java.util.Arrays;
 import java.util.HashSet;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -112,6 +113,7 @@ public class UserTests extends BasicTests {
 
     }
 
+    @Transactional
     @Test
     public void givenAdminUser_whenUserIsLoggedAndCreateNewUser_thenStatusOK() throws JsonProcessingException {
         try {
@@ -168,6 +170,7 @@ public class UserTests extends BasicTests {
                 .port(port)
                 .log()
                 .all()
+                .filter(sessionFilter)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(mapper.writeValueAsString(user))
                 .when()

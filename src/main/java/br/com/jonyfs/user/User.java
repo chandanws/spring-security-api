@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,18 +33,18 @@ public class User extends AbstractAuditable<User, Long> implements Serializable 
 
     private static final long serialVersionUID = 4474779185669784988L;
 
-    @NotEmpty
+    //@NotEmpty
     @Email
     String email;
 
     @JsonIgnore
-    @NotEmpty
+    //@NotEmpty
     String password;
 
-    @NotEmpty
+    //@NotEmpty
     String firstName;
 
-    @NotEmpty
+    //@NotEmpty
     String lastName;
 
     boolean enabled;

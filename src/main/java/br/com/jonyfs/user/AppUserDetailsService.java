@@ -50,15 +50,15 @@ public class AppUserDetailsService implements UserDetailsService {
         List<String> privileges = new ArrayList<>();
         List<Privilege> collection = new ArrayList<>();
 
-        roles.forEach((role) -> collection.addAll(role.getPrivileges()));
+        roles.forEach(role -> collection.addAll(role.getPrivileges()));
 
-        collection.forEach((item) -> privileges.add(item.getName()));
+        collection.forEach(item -> privileges.add(item.getName()));
         return privileges;
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        privileges.forEach((privilege) -> authorities.add(new SimpleGrantedAuthority(privilege)));
+        privileges.forEach(privilege -> authorities.add(new SimpleGrantedAuthority(privilege)));
         return authorities;
     }
 }
