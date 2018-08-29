@@ -4,6 +4,7 @@ import br.com.jonyfs.role.Role;
 import br.com.jonyfs.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -22,7 +23,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Privilege extends AbstractAuditable<User, Long> {
+public class Privilege extends AbstractAuditable<User, Long> implements Serializable {
+
+    private static final long serialVersionUID = 4474779185669784966L;
 
     private String name;
 
