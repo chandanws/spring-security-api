@@ -27,7 +27,7 @@ public class AppUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException(
-                    "No user found with username: " + email);
+                "No user found with username: " + email);
         }
 
         boolean enabled = true;
@@ -35,9 +35,9 @@ public class AppUserDetailsService implements UserDetailsService {
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
         return new org.springframework.security.core.userdetails.User(user.getEmail(),
-                user.getPassword().toLowerCase(), enabled, accountNonExpired,
-                credentialsNonExpired, accountNonLocked,
-                getAuthorities(user.getRoles()));
+            user.getPassword().toLowerCase(), enabled, accountNonExpired,
+            credentialsNonExpired, accountNonLocked,
+            getAuthorities(user.getRoles()));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
@@ -49,20 +49,16 @@ public class AppUserDetailsService implements UserDetailsService {
 
         List<String> privileges = new ArrayList<>();
         List<Privilege> collection = new ArrayList<>();
-        roles.forEach((role) -> {
-            collection.addAll(role.getPrivileges());
-        });
-        collection.forEach((item) -> {
-            privileges.add(item.getName());
-        });
+
+        roles.forEach((role) -> collection.addAll(role.getPrivileges()));
+
+        collection.forEach((item) -> privileges.add(item.getName()));
         return privileges;
     }
 
     private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        privileges.forEach((privilege) -> {
-            authorities.add(new SimpleGrantedAuthority(privilege));
-        });
+        privileges.forEach((privilege) -> authorities.add(new SimpleGrantedAuthority(privilege)));
         return authorities;
     }
 }
