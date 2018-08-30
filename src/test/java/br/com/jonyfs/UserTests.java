@@ -194,6 +194,7 @@ public class UserTests extends BasicTests {
                 .statusCode(HttpStatus.MOVED_TEMPORARILY.value());
         } catch (Exception e) {
             LOGGER.error("Fail:", e);
+            throw e;
         }
 
     }

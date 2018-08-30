@@ -3,6 +3,7 @@ package br.com.jonyfs;
 import br.com.jonyfs.privilege.Privilege;
 import br.com.jonyfs.role.Role;
 import br.com.jonyfs.role.RoleRepository;
+import br.com.jonyfs.team.Team;
 import br.com.jonyfs.user.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,7 +11,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
 import io.restassured.filter.session.SessionFilter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import lombok.extern.slf4j.Slf4j;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
@@ -151,7 +154,6 @@ public class RoleTests extends BasicTests {
 
             assertThat(singerFromRest.getId()).isNotNull();
 
-            /*
             Privilege priv3 = Privilege
                 .builder()
                 .name("CAN_DANCE")
@@ -160,7 +162,10 @@ public class RoleTests extends BasicTests {
             singerFromRest.setPrivileges(new ArrayList<>());
             singerFromRest.setUsers(new ArrayList<>());
 
-            singer.getPrivileges().add(priv3);
+            singerFromRest.getPrivileges().add(priv3);
+
+            admin.setTeams(new HashSet<>(Arrays.asList(Team.builder().name("Test Team").build())));
+
             singerFromRest.getUsers().add(admin);
 
             given()
@@ -171,12 +176,34 @@ public class RoleTests extends BasicTests {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(mapper.writeValueAsString(singerFromRest))
                 .when()
-                .put("/roles/" + singer.getId())
+                .put("/roles/" + singerFromRest.getId())
                 .then()
                 .log()
                 .all()
-                .statusCode(HttpStatus.CREATED.value());
-*/
+                .statusCode(HttpStatus.OK.value());
+
+            given()
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .get("/roles/{id}/users", singerFromRest.getId())
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.OK.value());
+
+            given()
+                .port(port)
+                .log()
+                .all()
+                .filter(sessionFilter)
+                .get("/roles/{id}/privileges", singerFromRest.getId())
+                .then()
+                .log()
+                .all()
+                .statusCode(HttpStatus.OK.value());
+
             given()
                 .port(port)
                 .log()
