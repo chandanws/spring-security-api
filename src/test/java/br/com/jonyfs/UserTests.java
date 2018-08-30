@@ -162,7 +162,7 @@ public class UserTests extends BasicTests {
                 .lastName("newuser")
                 .password("password")
                 .email("newuserFromAdmin@test.com")
-                .teams(new HashSet<>(Arrays.asList(devTeam, qaTeam, managersTeam)))
+                .teams(new HashSet<>(Arrays.asList(itTeam)))
                 .roles(Arrays.asList(createRoleAdminIfNotFound()))
                 .build();
 

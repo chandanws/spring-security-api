@@ -11,7 +11,6 @@ import javax.persistence.EntityListeners;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,7 +29,7 @@ public class Role extends AbstractAuditable<User, Long> implements Serializable 
 
     private static final long serialVersionUID = 4474779185669784999L;
 
-    @NotEmpty
+    //@NotEmpty
     String name;
 
     @JsonIgnore
